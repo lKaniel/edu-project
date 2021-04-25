@@ -4,7 +4,7 @@ let router = express.Router();
 
 router.post('/', function (req, res, next) {
     let id = req.body.id;
-    removePost(id);
+    removePost(id).then(r => {res.send("removed")});
 });
 
 module.exports = router;

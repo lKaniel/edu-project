@@ -3,7 +3,9 @@ const {getPosts} = require("../core/db/postsController");
 let router = express.Router();
 
 router.get('/', function (req, res, next) {
-    res.send(getPosts())
+    let a = getPosts().then(r => {
+        res.send(r)
+    })
 });
 
 module.exports = router;

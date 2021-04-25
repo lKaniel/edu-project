@@ -1,9 +1,7 @@
-import * as fs from "node/fs";
-
 let express = require('express');
 const {addTab} = require("../core/db/tabsController");
-let router = express.Router();
 const multer = require("multer");
+const fs = require("fs");
 
 const handleError = (err, res) => {
     res
@@ -18,6 +16,7 @@ const upload = multer({
 });
 
 
+let router = express.Router();
 router.post(
     "/upload",
     upload.single("file" /* name attribute of <file> element in your form */),

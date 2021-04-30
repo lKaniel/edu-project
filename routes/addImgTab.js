@@ -18,7 +18,7 @@ const upload = multer({
 
 let router = express.Router();
 router.post(
-    "/upload",
+    "upload",
     upload.single("file" /* name attribute of <file> element in your form */),
     (req, res) => {
 

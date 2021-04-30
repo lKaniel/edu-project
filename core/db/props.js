@@ -6,7 +6,7 @@ const con = mysql.createConnection({
     password: "Wy?T*wN~pm%dfSp5Epzsa",
     port: 3306,
     // insecureAuth : true,
-    database: "edu-project"
+    database: "edu_project"
 
 });
 

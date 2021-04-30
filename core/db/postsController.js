@@ -32,8 +32,7 @@ const getPosts = () => {
                 reject(err);
             }
             let posts = [];
-            if (result === undefined) resolve(posts);
-            for (let i = 0; i < result.length; i++) {
+            for (let i = 0; i < result?.length; i++) {
                 let sqlPost = result[i];
                 let post = {
                     id: sqlPost.id,

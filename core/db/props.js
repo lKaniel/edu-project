@@ -7,7 +7,6 @@ const con = mysql.createConnection({
     port: 3306,
     // insecureAuth : true,
     database: "edu_project"
-
 });
 
 module.exports = con;

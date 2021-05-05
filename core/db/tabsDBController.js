@@ -26,7 +26,7 @@ const removeTab = (id) => {
 
 const editTab = (id, data) => {
     return new Promise(function (resolve, reject) {
-        const sql = `DELETE FROM tabs WHERE id = ${id}`;
+        const sql = `UPDATE posts set data = "${data}" WHERE id = ${id}`;
         con.query(sql, function (err, result) {
             if (err) {
                 reject(err);
@@ -35,6 +35,42 @@ const editTab = (id, data) => {
         });
     })
 };
+
+const getTabId = (post_id, data) => {
+    return new Promise(function (resolve, reject) {
+        const sql = `SELECT * FROM tabs WHERE data = ${data} AND post_id = ${post_id} ORDER BY id DESC LIMIT 1`;
+        con.query(sql, function (err, result) {
+            if (err) {
+                reject(err);
+            }
+            if (result === undefined) resolve(null);
+            for (let i = 0; i < result?.length; i++) {
+                let sqlPost = result[i];
+                resolve(sqlPost.id);
+            }
+            resolve(null);
+        });
+    });
+
+}
+
+const getTabById = (id) => {
+    return new Promise(function (resolve, reject) {
+        const sql = `SELECT * FROM tabs WHERE id = ${id} ORDER BY id DESC LIMIT 1`;
+        con.query(sql, function (err, result) {
+            if (err) {
+                reject(err);
+            }
+            if (result === undefined) resolve(null);
+            for (let i = 0; i < result?.length; i++) {
+                let sqlPost = result[i];
+                resolve(sqlPost.data);
+            }
+            resolve(null);
+        });
+    });
+
+}
 
 const getTabsForPost = (id) => {
     return new Promise(function (resolve, reject) {
@@ -64,5 +100,8 @@ const getTabsForPost = (id) => {
 module.exports = {
     addTab,
     removeTab,
+    editTab,
+    getTabId,
+    getTabById,
     getTabsForPost
 };

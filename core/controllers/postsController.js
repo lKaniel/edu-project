@@ -7,21 +7,21 @@ const {addAction} = require("../db/actionsDBController");
 const createPost = async (category_id, title) => {
     await addPost(category_id, title);
     const id = await getPostId(category_id, title);
-    await addAction(id, "post", title, null);
+    await addAction(id, "posts", title, null);
 }
 
 const removePost = async (id) => {
     const {removePost} = require("../db/postsDBController");
     await removePost(id);
     const title = await getPostById(id);
-    await addAction(id, "post", null, title);
+    await addAction(id, "posts", null, title);
 }
 
 const editPost = async (id, title) => {
     const {editPost} = require("../db/postsDBController");
     await editPost(id, title);
     const old_title = await getPostById(id);
-    await addAction(id, "post", title, old_title);
+    await addAction(id, "posts", title, old_title);
 }
 
 module.exports =

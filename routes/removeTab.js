@@ -1,5 +1,5 @@
 let express = require('express');
-const {removeTab} = require("../core/db/tabsController");
+const {removeTab} = require("../core/db/tabsDBController");
 let router = express.Router();
 
 router.post('/', function (req, res, next) {

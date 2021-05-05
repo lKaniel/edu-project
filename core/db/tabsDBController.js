@@ -24,6 +24,18 @@ const removeTab = (id) => {
     })
 };
 
+const editTab = (id, data) => {
+    return new Promise(function (resolve, reject) {
+        const sql = `DELETE FROM tabs WHERE id = ${id}`;
+        con.query(sql, function (err, result) {
+            if (err) {
+                reject(err);
+            }
+            resolve(true);
+        });
+    })
+};
+
 const getTabsForPost = (id) => {
     return new Promise(function (resolve, reject) {
         const sql = `SELECT * FROM tabs WHERE post_id = ${id};`;

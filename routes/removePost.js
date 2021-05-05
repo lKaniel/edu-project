@@ -1,5 +1,5 @@
 let express = require('express');
-const {removePost} = require("../core/db/postsController");
+const {removePost} = require("../core/db/postsDBController");
 let router = express.Router();
 
 router.post('/', function (req, res, next) {

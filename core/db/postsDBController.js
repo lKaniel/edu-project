@@ -1,8 +1,8 @@
 const con = require("./props");
 
-const addTab = (post_id, type, data) => {
+const addPost = (category_id, title) => {
     return new Promise(function (resolve, reject) {
-        const sql = `INSERT INTO tabs (post_id, type, data) VALUES (${post_id}, ${type}, "${data}")`;
+        const sql = `INSERT INTO posts (title, category_id) VALUES ("${title}", ${category_id})`;
         con.query(sql, function (err, result) {
             if (err) {
                 reject(err);
@@ -12,45 +12,43 @@ const addTab = (post_id, type, data) => {
     });
 };
 
-const removeTab = (id) => {
+const removePost = (id) => {
     return new Promise(function (resolve, reject) {
-        const sql = `DELETE FROM tabs WHERE id = ${id}`;
+        const sql = `DELETE FROM posts WHERE id = ${id}`;
         con.query(sql, function (err, result) {
             if (err) {
                 reject(err);
             }
             resolve(true);
         });
-    })
+    });
 };
 
-const getTabsForPost = (id) => {
+const getPosts = (category_id) => {
     return new Promise(function (resolve, reject) {
-        const sql = `SELECT * FROM tabs WHERE post_id = ${id};`;
+        const sql = `SELECT * FROM posts WHERE group_id = "${category_id}"`;
         con.query(sql, function (err, result) {
             if (err) {
                 reject(err);
             }
-            let tabs = [];
-            if (result === undefined) resolve(tabs);
-            for (let i = 0; i < result.length; i++) {
+            let posts = [];
+            for (let i = 0; i < result?.length; i++) {
                 let sqlPost = result[i];
-                let tab = {
+                let post = {
                     id: sqlPost.id,
-                    post_id: sqlPost.post_id,
-                    type: sqlPost.type,
-                    data: sqlPost.data
+                    title: sqlPost.title
                 };
-                tabs.push(tab)
+                posts.push(post)
             }
-            resolve(tabs);
+            resolve(posts);
         });
     })
 };
 
 
+
 module.exports = {
-    addTab,
-    removeTab,
-    getTabsForPost
+    addPost,
+    removePost,
+    getPosts
 };

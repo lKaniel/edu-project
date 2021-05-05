@@ -12,7 +12,7 @@ let addTextTabRouter = require("./routes/addTextTab");
 // let addImgTabRouter = require("./routes/addImgTab");
 let removeTabRouter = require("./routes/removeTab");
 
-const {createTables} = require("./core/db/generalController");
+const {createTables} = require("./core/db/generalDBController");
 
 let app = express();
 

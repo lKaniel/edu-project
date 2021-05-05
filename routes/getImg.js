@@ -1,5 +1,5 @@
 let express = require('express');
-const {addPost} = require("../core/db/postsController");
+const {addPost} = require("../core/db/postsDBController");
 let router = express.Router();
 
 router.get('/', function (req, res, next) {

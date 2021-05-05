@@ -1,5 +1,5 @@
 let express = require('express');
-const {getTabsForPost} = require("../core/db/tabsController");
+const {getTabsForPost} = require("../core/db/tabsDBController");
 let router = express.Router();
 
 router.get('/', function (req, res, next) {

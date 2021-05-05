@@ -1,3 +1,4 @@
+const {clearActions} = require("../db/actionsDBController");
 const {addAction} = require("../db/actionsDBController");
 const {getCategoryById} = require("../db/categoriesDBController");
 const {addCategory} = require("../db/categoriesDBController");
@@ -7,6 +8,7 @@ const {getCategoryId} = require("../db/categoriesDBController");
 const createCategory = async (title) => {
     await addCategory(title);
     const id = await getCategoryId(title);
+    await clearActions();
     await addAction(id, "categories", title, null);
 }
 
@@ -14,6 +16,7 @@ const removeCategory = async (id) => {
     const {removeCategory} = require("../db/categoriesDBController");
     await removeCategory(id);
     const title = await getCategoryById(id);
+    await clearActions();
     await addAction(id, "categories", null, title);
 }
 
@@ -21,6 +24,7 @@ const editCategory = async (id, title) => {
     const {editCategory} = require("../db/categoriesDBController");
     await editCategory(id, title);
     const old_title = await getCategoryById(id);
+    await clearActions();
     await addAction(id, "categories", title, old_title);
 }
 

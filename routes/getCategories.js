@@ -1,11 +1,9 @@
 let express = require('express');
-const {getPosts} = require("../core/db/postsDBController");
+const {getCategories} = require("../core/db/categoriesDBController");
 let router = express.Router();
 
 router.get('/', function (req, res, next) {
-    let a = getPosts().then(r => {
-        res.send(r)
-    })
+    getCategories().then(r => res.send(r))
 });
 
 module.exports = router;

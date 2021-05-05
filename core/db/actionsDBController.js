@@ -19,6 +19,7 @@ const cancelLastAction = (item_id, item_type) => {
             if (err) {
                 reject(err);
             }
+            console.log(result)
             resolve(true);
         });
     });
@@ -32,13 +33,14 @@ const undoCancelLastAction = (item_id, item_type) => {
             if (err) {
                 reject(err);
             }
+            console.log(result)
             resolve(true);
         });
     });
 
 };
 
-const clearActons = () => {
+const clearActions = () => {
     return new Promise(function (resolve, reject) {
         const sql = `DELETE FROM actions WHERE is_active = false`;
         con.query(sql, function (err, result) {
@@ -57,5 +59,5 @@ module.exports = {
     addAction,
     cancelLastAction,
     undoCancelLastAction,
-    clearActons
+    clearActions
 };

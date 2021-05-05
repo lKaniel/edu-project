@@ -24,6 +24,54 @@ const removePost = (id) => {
     });
 };
 
+const editPost = (id, title) => {
+    return new Promise(function (resolve, reject) {
+        const sql = `UPDATE posts set title = "${title}" WHERE id = ${id}`;
+        con.query(sql, function (err, result) {
+            if (err) {
+                reject(err);
+            }
+            resolve(true);
+        });
+    });
+};
+
+const getPostId = (category_id, title) => {
+    return new Promise(function (resolve, reject) {
+        const sql = `SELECT * FROM posts WHERE title = ${title} AND category_id = ${category_id} ORDER BY id DESC LIMIT 1`;
+        con.query(sql, function (err, result) {
+            if (err) {
+                reject(err);
+            }
+            if (result === undefined) resolve(null);
+            for (let i = 0; i < result?.length; i++) {
+                let sqlPost = result[i];
+                resolve(sqlPost.id);
+            }
+            resolve(null);
+        });
+    });
+
+}
+
+const getPostById = (id) => {
+    return new Promise(function (resolve, reject) {
+        const sql = `SELECT * FROM posts WHERE id = ${id} ORDER BY id DESC LIMIT 1`;
+        con.query(sql, function (err, result) {
+            if (err) {
+                reject(err);
+            }
+            if (result === undefined) resolve(null);
+            for (let i = 0; i < result?.length; i++) {
+                let sqlPost = result[i];
+                resolve(sqlPost.title);
+            }
+            resolve(null);
+        });
+    });
+
+}
+
 const getPosts = (category_id) => {
     return new Promise(function (resolve, reject) {
         const sql = `SELECT * FROM posts WHERE group_id = "${category_id}"`;
@@ -46,9 +94,11 @@ const getPosts = (category_id) => {
 };
 
 
-
 module.exports = {
     addPost,
     removePost,
-    getPosts
+    editPost,
+    getPosts,
+    getPostId,
+    getPostById
 };

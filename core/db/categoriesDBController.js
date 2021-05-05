@@ -1,8 +1,8 @@
 const con = require("./props");
 
-const addGroup = (title) => {
+const addCategory = (title) => {
     return new Promise(function (resolve, reject) {
-        const sql = `INSERT INTO groups (title) VALUES ("${title}")`;
+        const sql = `INSERT INTO categories (title) VALUES ("${title}")`;
         con.query(sql, function (err, result) {
             if (err) {
                 reject(err);
@@ -12,9 +12,9 @@ const addGroup = (title) => {
     });
 };
 
-const removeGroup = (id) => {
+const removeCategory = (id) => {
     return new Promise(function (resolve, reject) {
-        const sql = `DELETE FROM group WHERE id = ${id}`;
+        const sql = `DELETE FROM categories WHERE id = ${id}`;
         con.query(sql, function (err, result) {
             if (err) {
                 reject(err);
@@ -24,9 +24,9 @@ const removeGroup = (id) => {
     })
 };
 
-const editGroup = (id, title) => {
+const editCategory = (id, title) => {
     return new Promise(function (resolve, reject) {
-        const sql = `UPDATE groups set title = "${title}" WHERE id = ${id}`;
+        const sql = `UPDATE categories set title = "${title}" WHERE id = ${id}`;
         con.query(sql, function (err, result) {
             if (err) {
                 reject(err);
@@ -36,32 +36,70 @@ const editGroup = (id, title) => {
     });
 };
 
-const getGroups = (value) => {
+const getCategoryId = (title) => {
     return new Promise(function (resolve, reject) {
-        const sql = `SELECT * FROM groups WHERE title LIKE "%${value}%"`;
+        const sql = `SELECT * FROM categories WHERE title = ${title} ORDER BY id DESC LIMIT 1`;
         con.query(sql, function (err, result) {
             if (err) {
                 reject(err);
             }
-            let groups = [];
-            if (result === undefined) resolve(groups);
-            for (let i = 0; i < result.length; i++) {
+            if (result === undefined) resolve(null);
+            for (let i = 0; i < result?.length; i++) {
+                let sqlPost = result[i];
+                resolve(sqlPost.id);
+            }
+            resolve(null);
+        });
+    });
+
+}
+
+const getCategoryById = (id) => {
+    return new Promise(function (resolve, reject) {
+        const sql = `SELECT * FROM categories WHERE id = ${id} ORDER BY id DESC LIMIT 1`;
+        con.query(sql, function (err, result) {
+            if (err) {
+                reject(err);
+            }
+            if (result === undefined) resolve(null);
+            for (let i = 0; i < result?.length; i++) {
+                let sqlPost = result[i];
+                resolve(sqlPost.title);
+            }
+            resolve(null);
+        });
+    });
+
+}
+
+const getCategories = (value) => {
+    return new Promise(function (resolve, reject) {
+        const sql = `SELECT * FROM categories WHERE title LIKE "%${value}%"`;
+        con.query(sql, function (err, result) {
+            if (err) {
+                reject(err);
+            }
+            let categories = [];
+            if (result === undefined) resolve(categories);
+            for (let i = 0; i < result?.length; i++) {
                 let sqlPost = result[i];
                 let group = {
                     id: sqlPost.id,
                     title: sqlPost.title
                 };
-                groups.push(group)
+                categories.push(group)
             }
-            resolve(groups);
+            resolve(categories);
         });
     })
 };
 
 
 module.exports = {
-    addGroup,
-    editGroup,
-    removeGroup,
-    getGroups
+    addCategory,
+    editCategory,
+    removeCategory,
+    getCategories,
+    getCategoryId,
+    getCategoryById
 };
